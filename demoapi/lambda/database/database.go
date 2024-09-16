@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	TABLE_NAME = "userTable"
+	TABLE_NAME = "JITestDemoUserTable"
 )
 
 type UserStore interface {
