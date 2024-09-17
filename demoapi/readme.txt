@@ -89,25 +89,25 @@ curl -X POST https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/regi
 
 curl -X POST https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
 
-curl -X GET https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/me -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTU3ODI2LCJyb2xlIjoidXNlciIsInVzZXIiOiJ1c2VyMSJ9.c6naiQs4kBpZLN7bZuu-nMLU5Av0yKQ6FT_V4-nJwtk"
+curl -X GET https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/me -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN"
 
-curl -X PUT https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/role -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTU4MjI5LCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoiYWRtaW4xIn0.c8cfDPN1ezpsHETVzQWkou7rO9n9CTuje2ui2QTkAdE" -d '{"username":"user1", "newrole":"admin"}'
+curl -X PUT https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/role -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN" -d '{"username":"user1", "newrole":"admin"}'
 
-curl -X GET https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTY0NTQwLCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoiYWRtaW4xIn0.qeqgGTt1DRgjeLFA7MnFZ2BC8tCKSUMd-KeBw8qOi5Q"
+curl -X GET https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN"
 
-curl -X DELETE https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/remove?username=user111 -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTY0NTQwLCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoiYWRtaW4xIn0.qeqgGTt1DRgjeLFA7MnFZ2BC8tCKSUMd-KeBw8qOi5Q"
+curl -X DELETE https://tq4028wi45.execute-api.eu-central-1.amazonaws.com/prod/remove?username=user111 -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN"
 
 - products - 
 
-curl -X POST https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTgzNzYxLCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoidXNlcjEifQ.QfHyIZNPl4ApSDXvpkXFJYBO7BgrVDp6_n-k5WCvF-s" -d '{"name":"product1", "description":"some good product 1", "price": 101}'
+curl -X POST https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN" -d '{"name":"product1", "description":"some good product 1", "price": 101}'
 
 curl -X GET https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json"
 
 curl -X GET https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/one?id=d396bd8f-25a2-40b9-94f2-e61942ad324a -H "Content-Type: application/json"
 
-curl -X PUT https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/update -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTgzNzYxLCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoidXNlcjEifQ.QfHyIZNPl4ApSDXvpkXFJYBO7BgrVDp6_n-k5WCvF-s" -d '{"id": "d396bd8f-25a2-40b9-94f2-e61942ad324a", "name":"product updated", "description":"some good product updated", "price": 1000}'
+curl -X PUT https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/update -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN" -d '{"id": "d396bd8f-25a2-40b9-94f2-e61942ad324a", "name":"product updated", "description":"some good product updated", "price": 1000}'
 
-curl -X DELETE https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/delete?id=d396bd8f-25a2-40b9-94f2-e61942ad324a -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoxNzI2NTgzNzYxLCJyb2xlIjoiYWRtaW4iLCJ1c2VyIjoidXNlcjEifQ.QfHyIZNPl4ApSDXvpkXFJYBO7BgrVDp6_n-k5WCvF-s"
+curl -X DELETE https://in60wqcj4h.execute-api.eu-central-1.amazonaws.com/prod/delete?id=d396bd8f-25a2-40b9-94f2-e61942ad324a -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS-TOKEN"
 
 
 -= END TESTS =-
