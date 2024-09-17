@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"lambda-func/common"
 	"lambda-func/database"
+	"lambda-func/queue"
 	"lambda-func/types"
 	"net/http"
 
@@ -12,12 +13,14 @@ import (
 )
 
 type ApiHandler struct {
-	dbStore database.UserStore
+	dbStore  database.UserStore
+	msgQueue queue.MessageQueue
 }
 
-func NewApiHandler(dbStore database.UserStore) ApiHandler {
+func NewApiHandler(dbStore database.UserStore, msgQueue queue.MessageQueue) ApiHandler {
 	return ApiHandler{
-		dbStore: dbStore,
+		dbStore:  dbStore,
+		msgQueue: msgQueue,
 	}
 }
 
@@ -63,6 +66,15 @@ func (api ApiHandler) RegisterUser(request events.APIGatewayProxyRequest) (event
 	}
 
 	err = api.dbStore.InsertUser(user)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, fmt.Errorf("error inserting user into the database %w", err)
+	}
+
+	queueMessageBody := "New user created " + user.Username
+	err = api.msgQueue.SendMessage(queueMessageBody)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			Body:       "Internal server error",

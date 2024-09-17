@@ -3,6 +3,7 @@ package app
 import (
 	"lambda-func/api"
 	"lambda-func/database"
+	"lambda-func/queue"
 )
 
 type App struct {
@@ -11,7 +12,8 @@ type App struct {
 
 func NewApp() App {
 	db := database.NewDynamoDB()
-	apiHandler := api.NewApiHandler(db)
+	q := queue.NewSqsClient()
+	apiHandler := api.NewApiHandler(db, q)
 
 	return App{
 		ApiHandler: apiHandler,

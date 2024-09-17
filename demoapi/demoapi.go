@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"demoapi/common"
 
 	"github.com/aws/aws-cdk-go/awscdk/v2"
@@ -27,9 +25,9 @@ func NewDemoapiStack(scope constructs.Construct, id string, props *DemoapiStackP
 
 	queue := awssqs.NewQueue(stack, jsii.String(common.QueueName), &awssqs.QueueProps{
 		VisibilityTimeout: awscdk.Duration_Seconds(jsii.Number(300)),
+		QueueName:         jsii.String(common.QueueName),
+		RemovalPolicy:     awscdk.RemovalPolicy_DESTROY,
 	})
-
-	fmt.Println("Queue URL:", queue.QueueUrl())
 
 	tableUsers := awsdynamodb.NewTable(stack, jsii.String(common.UserTableName), &awsdynamodb.TableProps{
 		PartitionKey: &awsdynamodb.Attribute{
