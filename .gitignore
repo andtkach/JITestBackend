@@ -23,7 +23,11 @@ go.work.sum
 
 # env file
 .env
-demoapi/lambda/main
-demoapi/lambda/bootstrap
-demoapi/lambda/function.zip
-demoapi/lambda/main
+demoapi/lambda_user/main
+demoapi/lambda_user/bootstrap
+demoapi/lambda_user/user_function.zip
+
+demoapi/lambda_product/main
+demoapi/lambda_product/bootstrap
+demoapi/lambda_product/product_function.zip
+
