@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"lambda-func/common"
 	"lambda-func/database"
 	"lambda-func/types"
 	"net/http"
@@ -116,8 +117,6 @@ func (api ApiHandler) LoginUser(request events.APIGatewayProxyRequest) (events.A
 
 func (api ApiHandler) GetUser(request events.APIGatewayProxyRequest, userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
 
-	//username := request.QueryStringParameters["name"]
-
 	if userContext.Username == "" {
 		return events.APIGatewayProxyResponse{
 			Body:       "Anauthorized error",
@@ -135,10 +134,153 @@ func (api ApiHandler) GetUser(request events.APIGatewayProxyRequest, userContext
 		}, err
 	}
 
-	successMsg := fmt.Sprintf(`{"username_context": "%s", "role_context": "%s", "username_database": "%s", "role_database": "%s"}`, username, userContext.Role, user.Username, user.Role)
+	successMsg := fmt.Sprintf(`{"username": "%s", "role": "%s"}`, username, user.Role)
 
 	return events.APIGatewayProxyResponse{
 		Body:       successMsg,
 		StatusCode: http.StatusOK,
 	}, nil
+}
+
+func (api ApiHandler) UpdateRole(request events.APIGatewayProxyRequest, userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
+
+	result, err := checkAdmin(userContext)
+	if err != nil {
+		return result, err
+	}
+
+	type RoleRequest struct {
+		Username string `json:"username"`
+		NewRole  string `json:"newrole"`
+	}
+
+	var roleRequest RoleRequest
+
+	err = json.Unmarshal([]byte(request.Body), &roleRequest)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "invalid request",
+			StatusCode: http.StatusBadRequest,
+		}, err
+	}
+
+	user, err := api.dbStore.GetUser(roleRequest.Username)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	if !(roleRequest.NewRole == common.RoleAdmin || roleRequest.NewRole == common.RoleUser) {
+		return events.APIGatewayProxyResponse{
+			Body:       fmt.Sprintf("Invalid role %s", roleRequest.NewRole),
+			StatusCode: http.StatusBadRequest,
+		}, err
+	}
+
+	user.Role = roleRequest.NewRole
+
+	err = api.dbStore.UpdateUser(user)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	successMsg := fmt.Sprintf(`{"username": "%s", "role": "%s"}`, user.Username, user.Role)
+
+	return events.APIGatewayProxyResponse{
+		Body:       successMsg,
+		StatusCode: http.StatusOK,
+	}, nil
+}
+
+func (api ApiHandler) RemoveUser(request events.APIGatewayProxyRequest, userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
+
+	result, err := checkAdmin(userContext)
+	if err != nil {
+		return result, err
+	}
+
+	username := request.QueryStringParameters["username"]
+
+	user, err := api.dbStore.GetUser(username)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	err = api.dbStore.DeleteUser(user)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	successMsg := fmt.Sprintf(`user removed`, username)
+
+	return events.APIGatewayProxyResponse{
+		Body:       successMsg,
+		StatusCode: http.StatusOK,
+	}, nil
+}
+
+func (api ApiHandler) ListUsers(request events.APIGatewayProxyRequest, userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
+
+	result, err := checkAdmin(userContext)
+	if err != nil {
+		return result, err
+	}
+
+	users, err := api.dbStore.ListUsers()
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	var userResponse []types.UserResponse
+	for _, user := range users {
+		userResponse = append(userResponse, types.UserResponse{
+			Username: user.Username,
+			Role:     user.Role,
+		})
+	}
+
+	jsonResponse, err := json.Marshal(userResponse)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "Internal server error",
+			StatusCode: http.StatusInternalServerError,
+		}, err
+	}
+
+	return events.APIGatewayProxyResponse{
+		Body:       string(jsonResponse),
+		StatusCode: http.StatusOK,
+	}, nil
+}
+
+func checkAdmin(userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
+	if userContext.Username == "" {
+		return events.APIGatewayProxyResponse{
+			Body:       "Anauthorized error",
+			StatusCode: http.StatusUnauthorized,
+		}, fmt.Errorf("user context is nil")
+	}
+
+	if userContext.Role != common.RoleAdmin {
+		return events.APIGatewayProxyResponse{
+			Body:       "Anauthorized error",
+			StatusCode: http.StatusUnauthorized,
+		}, fmt.Errorf("user does not have enogth privileges")
+	}
+
+	return events.APIGatewayProxyResponse{}, nil
 }

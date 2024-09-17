@@ -23,13 +23,6 @@ func HandleRequest(event MyEvent) (string, error) {
 	return fmt.Sprintf("Successfully called by - %s", event.Username), nil
 }
 
-func ProtectedHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{
-		Body:       "This is a protected route",
-		StatusCode: http.StatusOK,
-	}, nil
-}
-
 func main() {
 	lambdaApp := app.NewApp()
 	lambda.Start(func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -40,6 +33,12 @@ func main() {
 			return lambdaApp.ApiHandler.LoginUser(request)
 		case "/me":
 			return middleware.ValidateJWTMiddleware(lambdaApp.ApiHandler.GetUser)(request)
+		case "/role":
+			return middleware.ValidateJWTMiddleware(lambdaApp.ApiHandler.UpdateRole)(request)
+		case "/list":
+			return middleware.ValidateJWTMiddleware(lambdaApp.ApiHandler.ListUsers)(request)
+		case "/remove":
+			return middleware.ValidateJWTMiddleware(lambdaApp.ApiHandler.RemoveUser)(request)
 		default:
 			return events.APIGatewayProxyResponse{
 				Body:       "Not found",

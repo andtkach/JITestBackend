@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"demoapi/common"
+
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awsapigateway"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awsdynamodb"
@@ -23,30 +25,31 @@ func NewDemoapiStack(scope constructs.Construct, id string, props *DemoapiStackP
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
-	queue := awssqs.NewQueue(stack, jsii.String("JITestDemoQueue"), &awssqs.QueueProps{
+	queue := awssqs.NewQueue(stack, jsii.String(common.QueueName), &awssqs.QueueProps{
 		VisibilityTimeout: awscdk.Duration_Seconds(jsii.Number(300)),
 	})
 
 	fmt.Println("Queue URL:", queue.QueueUrl())
 
-	tableUsers := awsdynamodb.NewTable(stack, jsii.String("JITestDemoUserTable"), &awsdynamodb.TableProps{
+	tableUsers := awsdynamodb.NewTable(stack, jsii.String(common.UserTableName), &awsdynamodb.TableProps{
 		PartitionKey: &awsdynamodb.Attribute{
 			Name: jsii.String("username"),
 			Type: awsdynamodb.AttributeType_STRING,
 		},
-		TableName:     jsii.String("JITestDemoUserTable"),
+		TableName:     jsii.String(common.UserTableName),
 		RemovalPolicy: awscdk.RemovalPolicy_DESTROY,
 	})
 
-	function := awslambda.NewFunction(stack, jsii.String("JITestDemoFunction"), &awslambda.FunctionProps{
+	function := awslambda.NewFunction(stack, jsii.String(common.FunctionName), &awslambda.FunctionProps{
 		Runtime: awslambda.Runtime_PROVIDED_AL2023(),
 		Code:    awslambda.AssetCode_FromAsset(jsii.String("lambda/function.zip"), nil),
 		Handler: jsii.String("main"),
 	})
 
 	tableUsers.GrantReadWriteData(function)
+	queue.GrantSendMessages(function)
 
-	api := awsapigateway.NewRestApi(stack, jsii.String("JITestDemoGateway"), &awsapigateway.RestApiProps{
+	api := awsapigateway.NewRestApi(stack, jsii.String(common.GatewayName), &awsapigateway.RestApiProps{
 		DefaultCorsPreflightOptions: &awsapigateway.CorsOptions{
 			AllowHeaders: jsii.Strings("Content-Type", "Authorization"),
 			AllowMethods: jsii.Strings("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"),
@@ -73,6 +76,15 @@ func NewDemoapiStack(scope constructs.Construct, id string, props *DemoapiStackP
 	meResource := api.Root().AddResource(jsii.String("me"), nil)
 	meResource.AddMethod(jsii.String("GET"), integration, nil)
 
+	roleResource := api.Root().AddResource(jsii.String("role"), nil)
+	roleResource.AddMethod(jsii.String("PUT"), integration, nil)
+
+	removeResource := api.Root().AddResource(jsii.String("remove"), nil)
+	removeResource.AddMethod(jsii.String("DELETE"), integration, nil)
+
+	listResource := api.Root().AddResource(jsii.String("list"), nil)
+	listResource.AddMethod(jsii.String("GET"), integration, nil)
+
 	return stack
 }
 
@@ -81,7 +93,7 @@ func main() {
 
 	app := awscdk.NewApp(nil)
 
-	NewDemoapiStack(app, "JITestDemoAPIStack", &DemoapiStackProps{
+	NewDemoapiStack(app, common.StackName, &DemoapiStackProps{
 		awscdk.StackProps{
 			Env: env(),
 		},

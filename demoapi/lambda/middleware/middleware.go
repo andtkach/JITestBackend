@@ -6,13 +6,14 @@ import (
 	"strings"
 	"time"
 
-	appTypes "lambda-func/types"
+	"lambda-func/common"
+	"lambda-func/types"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func ValidateJWTMiddleware(next func(request events.APIGatewayProxyRequest, userContext appTypes.UserContext) (events.APIGatewayProxyResponse, error)) func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func ValidateJWTMiddleware(next func(request events.APIGatewayProxyRequest, userContext types.UserContext) (events.APIGatewayProxyResponse, error)) func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	return func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 		// extract the headers from our token
@@ -42,7 +43,7 @@ func ValidateJWTMiddleware(next func(request events.APIGatewayProxyRequest, user
 			}, nil
 		}
 
-		userContext := appTypes.UserContext{
+		userContext := types.UserContext{
 			Username: claims["user"].(string),
 			Role:     claims["role"].(string),
 		}
@@ -69,7 +70,7 @@ func extractTokenFromHeaders(headers map[string]string) string {
 
 func parseToken(tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		secret := "very-strong-secret"
+		secret := common.TokenSecret
 		return []byte(secret), nil
 	})
 

@@ -1,26 +1,24 @@
 package database
 
-// This is going to be the logic that directly communicates with
-// our database
-
 import (
 	"fmt"
+	"lambda-func/common"
 	"lambda-func/types"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-)
-
-const (
-	TABLE_NAME = "JITestDemoUserTable"
+	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 )
 
 type UserStore interface {
 	DoesUserExist(username string) (bool, error)
 	InsertUser(user types.User) error
 	GetUser(username string) (types.User, error)
+	UpdateUser(user types.User) error
+	DeleteUser(user types.User) error
+	ListUsers() ([]types.User, error)
 }
 
 type DynamoDBClient struct {
@@ -38,7 +36,7 @@ func NewDynamoDB() DynamoDBClient {
 
 func (u DynamoDBClient) DoesUserExist(username string) (bool, error) {
 	result, err := u.databaseStore.GetItem(&dynamodb.GetItemInput{
-		TableName: aws.String(TABLE_NAME),
+		TableName: aws.String(common.UserTableName),
 		Key: map[string]*dynamodb.AttributeValue{
 			"username": {
 				S: aws.String(username),
@@ -59,7 +57,7 @@ func (u DynamoDBClient) DoesUserExist(username string) (bool, error) {
 
 func (u DynamoDBClient) InsertUser(user types.User) error {
 	item := &dynamodb.PutItemInput{
-		TableName: aws.String(TABLE_NAME),
+		TableName: aws.String(common.UserTableName),
 		Item: map[string]*dynamodb.AttributeValue{
 			"username": {
 				S: aws.String(user.Username),
@@ -81,11 +79,40 @@ func (u DynamoDBClient) InsertUser(user types.User) error {
 	return nil
 }
 
+func (u DynamoDBClient) UpdateUser(user types.User) error {
+
+	update := expression.Set(expression.Name("role"), expression.Value(user.Role))
+	expr, err := expression.NewBuilder().WithUpdate(update).Build()
+
+	if err != nil {
+		return err
+	}
+
+	item := &dynamodb.UpdateItemInput{
+		TableName: aws.String(common.UserTableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"username": {
+				S: aws.String(user.Username),
+			},
+		},
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		UpdateExpression:          expr.Update(),
+	}
+
+	_, err = u.databaseStore.UpdateItem(item)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (u DynamoDBClient) GetUser(username string) (types.User, error) {
 	var user types.User
 
 	result, err := u.databaseStore.GetItem(&dynamodb.GetItemInput{
-		TableName: aws.String(TABLE_NAME),
+		TableName: aws.String(common.UserTableName),
 		Key: map[string]*dynamodb.AttributeValue{
 			"username": {
 				S: aws.String(username),
@@ -107,4 +134,48 @@ func (u DynamoDBClient) GetUser(username string) (types.User, error) {
 	}
 
 	return user, nil
+}
+
+func (u DynamoDBClient) DeleteUser(user types.User) error {
+
+	item := &dynamodb.DeleteItemInput{
+		TableName: aws.String(common.UserTableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"username": {
+				S: aws.String(user.Username),
+			},
+		},
+	}
+
+	_, err := u.databaseStore.DeleteItem(item)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (u DynamoDBClient) ListUsers() ([]types.User, error) {
+	var users []types.User
+
+	result, err := u.databaseStore.Scan(&dynamodb.ScanInput{
+		TableName: aws.String(common.UserTableName),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, i := range result.Items {
+		item := types.User{}
+		err = dynamodbattribute.UnmarshalMap(i, &item)
+
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, item)
+	}
+
+	return users, nil
 }

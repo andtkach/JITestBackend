@@ -1,6 +1,7 @@
 package types
 
 import (
+	"lambda-func/common"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -23,6 +24,11 @@ type UserContext struct {
 	Role     string
 }
 
+type UserResponse struct {
+	Username string `json:"username"`
+	Role     string `json:"role"`
+}
+
 func NewUser(registerUser RegisterUser) (User, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(registerUser.Password), 10)
 	if err != nil {
@@ -32,7 +38,7 @@ func NewUser(registerUser RegisterUser) (User, error) {
 	return User{
 		Username:     registerUser.Username,
 		PasswordHash: string(hashedPassword),
-		Role:         "user", // or "admin"
+		Role:         common.RoleUser,
 	}, nil
 }
 
@@ -53,7 +59,7 @@ func CreateToken(user User) string {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims, nil)
 
-	secret := "very-strong-secret"
+	secret := common.TokenSecret
 
 	tokenString, err := token.SignedString([]byte(secret))
 	if err != nil {
