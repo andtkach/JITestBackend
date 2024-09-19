@@ -44,3 +44,16 @@ Code structure
 - Infrastructure: awssqs, awsdynamodb, awslambda, awsapigateway
 - Functions: users, products
 
+====================================================================
+
+Demo:
+
+aws --version
+cdk --version
+
+# cdk bootstrap aws://ACCOUNT-NUMBER/REGION
+# cdk init app --language go
+
+cdk diff
+cdk deploy
+cdk destory

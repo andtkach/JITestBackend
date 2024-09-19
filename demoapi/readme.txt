@@ -1,5 +1,5 @@
 
-API Gayeway -> AWS Lambda Function -> AWS DynamoDB
+API Gateway -> AWS Lambda Function -> AWS DynamoDB
 AWS CloudFormation
 
 Curl as a client
