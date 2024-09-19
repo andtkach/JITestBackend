@@ -1,4 +1,6 @@
+
 Recently I helped a friend of mine complete a test task for the position of "Full-stack Tech Lead". The essence of the test task was to create a prototype of a user management system with the ability to create a new user, log in and get a list of all users. My friend chose the following technology stack to complete this test task.
+
 - UI with React.js using CRA
 - Web API Node.js with Express.js
 - Database using MongoDB on Atlas
@@ -60,44 +62,45 @@ cdk diff
 cdk deploy
 
 
-JITestDemoAPIStack.JITestDemoProductGatewayEndpoint9171659A = JITestDemoAPIStack.JITestDemoUserGatewayEndpointC548AB6D = 
+JITestDemoAPIStack.JITestDemoProductGatewayEndpoint9171659A = https://tde2gp1jf6.execute-api.eu-central-1.amazonaws.com/prod/
+JITestDemoAPIStack.JITestDemoUserGatewayEndpointC548AB6D = https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/
 
 # AWS Console
 
 # Gateways
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+curl -X POST https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
 
 # Database
 # Queue
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+curl -X POST https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user2", "password":"password123"}'
+curl -X POST https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user2", "password":"password123"}'
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user3", "password":"password123"}'
+curl -X POST https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user3", "password":"password123"}'
 
 # Get list of users
 
-curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
+curl -X GET https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
 
 # Logs in Cloud watch
 
 # Change role to admin
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+curl -X POST https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
 
-curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
+curl -X GET https://gl6l5gtynd.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
 
 # Create products
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product1", "description":"some good product 1", "price": 101}'
+curl -X POST https://tde2gp1jf6.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product1", "description":"some good product 1", "price": 101}'
 
-curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product2", "description":"some good product 2", "price": 202}'
+curl -X POST https://tde2gp1jf6.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product2", "description":"some good product 2", "price": 202}'
 
 # List products 
 
-curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json"
+curl -X GET https://tde2gp1jf6.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json"
 
 # Database with products
 
