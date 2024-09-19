@@ -1,0 +1,108 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8" pages="2">
+  <diagram id="kWzIjFQpDEz8A9gignwg" name="Structure">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-1" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="50" y="230" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-2" value="Users Gateway" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.api_gateway;fillColor=#D9A741;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="200" y="80" width="76.5" height="93" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-3" value="Users f&lt;span style=&quot;background-color: initial;&quot;&gt;unction&lt;/span&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.lambda_function;fillColor=#F58534;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="460" y="101" width="69" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-4" value="Message Queeue" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.sns;fillColor=#D9A741;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="680" y="43.5" width="76.5" height="76.5" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-5" value="Database" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.dynamo_db;fillColor=#2E73B8;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="680" y="230" width="72" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-7" value="Products Gateway" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.api_gateway;fillColor=#D9A741;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="200" y="311" width="76.5" height="93" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-8" value="Products f&lt;span style=&quot;background-color: initial;&quot;&gt;unction&lt;/span&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.lambda_function;fillColor=#F58534;gradientColor=none;" parent="1" vertex="1">
+          <mxGeometry x="460" y="332" width="69" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-9" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="240" as="sourcePoint" />
+            <mxPoint x="170" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-10" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="136.5" as="sourcePoint" />
+            <mxPoint x="400" y="136.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-11" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="150" as="sourcePoint" />
+            <mxPoint x="630" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-12" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="280" as="sourcePoint" />
+            <mxPoint x="170" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-14" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="357" as="sourcePoint" />
+            <mxPoint x="400" y="357" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-15" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="361" as="sourcePoint" />
+            <mxPoint x="630" y="311" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-16" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="180" as="sourcePoint" />
+            <mxPoint x="630" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eoxqgmZMJjv5ySeJL2nW-17" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Provided by platform&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;- SSL given by the Gateway&lt;/p&gt;&lt;p&gt;- Monitoring by Cloudwatch&lt;/p&gt;&lt;p&gt;- Scaling by AWS&lt;/p&gt;&lt;p&gt;- Production ready database&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="120" y="560" width="440" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Code" id="Pgqgt_Cuxw3oXqol-DhF">
+    <mxGraphModel dx="1306" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-1" value="Code" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f9f7ed;strokeColor=#36393d;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="680" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-2" value="Infrastructure" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="130" width="200" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-3" value="&lt;b&gt;Function Users&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Register user&lt;/div&gt;&lt;div&gt;- Login user&lt;/div&gt;&lt;div&gt;- Change role&lt;/div&gt;&lt;div&gt;- List users&lt;/div&gt;&lt;div&gt;- Delete user&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="460" y="130" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-4" value="&lt;b&gt;Function Products&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Create&lt;/div&gt;&lt;div&gt;- Update&lt;/div&gt;&lt;div&gt;- Delete&lt;/div&gt;&lt;div&gt;-Get one&lt;/div&gt;&lt;div&gt;- Get all&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="460" y="285" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-5" value="Database" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="180" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-6" value="Queue" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="220" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-7" value="Gateway" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="260" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="jMqq2uyKP-YXrUEjf9G1-8" value="Function" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="300" width="120" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,46 @@
+Recently I helped a friend of mine complete a test task for the position of "Full-stack Tech Lead". The essence of the test task was to create a prototype of a user management system with the ability to create a new user, log in and get a list of all users. My friend chose the following technology stack to complete this test task.
+- UI with React.js using CRA
+- Web API Node.js with Express.js
+- Database using MongoDB on Atlas
+
+And he failed... "Backend does not use real production technologies"
+So his backend part of test assignment was far from ideal due to technologies he has selected for a test task ((
+
+He also struggled with web API deployment on the public host and with SSL configuration and with database connections. An web API troubleshooting was not good at all in his implementation.
+
+Okay, what can we do?
+
+Test assignment web api backend using real production technologies: 
+Golang, AWS Lambda, AWS Gateway, AWS DynamoDB, AWS CloudFormation
+
+- Quick deployment
+- No ssl overhead and public endpoints
+- Build in logging and troubleshooting
+- Easy to develop everywhere, no or minimal computer setup to be ready
+- Easy to up all backend and easy to destroy complete infrastructure
+
+https://github.com/andtkach/JITestBackend
+
+This project is good for:
+1. Frontend developers to apply for a full-stack positions
+2. Backend developers to have a template for a web api with quick deployment
+3. Anyone to see how AWS CDK Go work together
+
+Web API:
+- register new user
+- login using username and password
+- me to get information about the user based on jwt token and database info
+- role to change existing user role (user | admin) (only for admins)
+- list to get list of all users (only for admins)
+- remove user from the system
+- create product
+- update product
+- delete product
+- list products
+- get single product
+
+
+Code structure
+- Infrastructure: awssqs, awsdynamodb, awslambda, awsapigateway
+- Functions: users, products
+
