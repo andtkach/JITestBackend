@@ -54,6 +54,53 @@ cdk --version
 # cdk bootstrap aws://ACCOUNT-NUMBER/REGION
 # cdk init app --language go
 
+# Code in VS
+
 cdk diff
 cdk deploy
-cdk destory
+
+
+JITestDemoAPIStack.JITestDemoProductGatewayEndpoint9171659A = JITestDemoAPIStack.JITestDemoUserGatewayEndpointC548AB6D = 
+
+# AWS Console
+
+# Gateways
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+
+# Database
+# Queue
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user2", "password":"password123"}'
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/register -H "Content-Type: application/json" -d '{"username":"user3", "password":"password123"}'
+
+# Get list of users
+
+curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
+
+# Logs in Cloud watch
+
+# Change role to admin
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/login -H "Content-Type: application/json" -d '{"username":"user1", "password":"password123"}'
+
+curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
+
+# Create products
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product1", "description":"some good product 1", "price": 101}'
+
+curl -X POST https://URL.execute-api.eu-central-1.amazonaws.com/prod/create -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d '{"name":"product2", "description":"some good product 2", "price": 202}'
+
+# List products 
+
+curl -X GET https://URL.execute-api.eu-central-1.amazonaws.com/prod/list -H "Content-Type: application/json"
+
+# Database with products
+
+cdk destroy
+
+End

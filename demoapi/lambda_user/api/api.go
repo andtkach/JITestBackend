@@ -280,7 +280,11 @@ func (api ApiHandler) ListUsers(request events.APIGatewayProxyRequest, userConte
 }
 
 func checkAdmin(userContext types.UserContext) (events.APIGatewayProxyResponse, error) {
+
+	fmt.Println("in checkAdmin. userContext.Role is ", userContext.Role)
+
 	if userContext.Username == "" {
+		fmt.Println("in checkAdmin. userContext Username is nil")
 		return events.APIGatewayProxyResponse{
 			Body:       "Anauthorized error",
 			StatusCode: http.StatusUnauthorized,
@@ -288,6 +292,7 @@ func checkAdmin(userContext types.UserContext) (events.APIGatewayProxyResponse, 
 	}
 
 	if userContext.Role != common.RoleAdmin {
+		fmt.Println("in checkAdmin. userContext Role is not admin, it is ", userContext.Role)
 		return events.APIGatewayProxyResponse{
 			Body:       "Anauthorized error",
 			StatusCode: http.StatusUnauthorized,
